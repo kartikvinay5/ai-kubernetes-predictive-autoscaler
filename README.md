@@ -35,26 +35,6 @@ Visualization: Grafana
 
 Machine Learning: Scikit-learn
 
-Project Structure
-ai-kubernetes-autoscaler
-│
-├── autoscaler/
-│   ├── predict_load.py
-│   ├── train_model.py
-│   └── metrics_collector.py
-│
-├── docker/
-│   └── Dockerfile
-│
-├── k8s/
-│   ├── autoscaler-deployment.yaml
-│   └── autoscaler-rbac.yaml
-│
-├── model/
-│   └── load_model.pkl
-│
-├── requirements.txt
-└── README.md
 Working Mechanism
 
 The application is deployed as a Kubernetes deployment.
@@ -72,7 +52,7 @@ It predicts future load and triggers scaling actions accordingly.
 Example Scaling Command:
 
 kubectl scale deployment hello-minikube --replicas=5
-Setup and Execution
+Setup and Executio
 1. Start Kubernetes Cluster
 minikube start
 2. Deploy Monitoring Stack
