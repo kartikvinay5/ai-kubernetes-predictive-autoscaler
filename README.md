@@ -20,19 +20,7 @@ Runs as a containerized autoscaler within the Kubernetes cluster
 Implements secure access using Kubernetes RBAC
 
 System Architecture
-Users / Traffic
-        │
-        ▼
-Kubernetes Deployment (Application)
-        │
-        ▼
-Prometheus Monitoring (Metrics Collection)
-        │
-        ▼
-AI Autoscaler Pod (ML Prediction Engine)
-        │
-        ▼
-Kubernetes Scaling API (Adjust Replicas)
+
 Technology Stack
 
 Containerization: Docker
