@@ -1,348 +1,147 @@
 AI-Driven Predictive Autoscaling for Kubernetes
-
-
-
-A machine-learning based autoscaling system that predicts workload and automatically scales Kubernetes deployments using Prometheus metrics.
-
-
-
-This project demonstrates how AI can be integrated with cloud-native infrastructure to proactively manage application scaling.
-
-
-
 Project Overview
 
+Traditional autoscaling mechanisms in Kubernetes are reactive—they scale applications only after an increase in traffic is detected. This often leads to short periods of performance degradation.
 
+This project introduces an AI-driven predictive autoscaling system that anticipates workload changes in advance and scales applications proactively. By leveraging machine learning and real-time monitoring data, the system ensures better performance, reduced latency, and efficient resource utilization.
 
-Traditional autoscaling mechanisms react after traffic increases, which can lead to temporary service degradation.
+Key Features
 
+Predicts future workload using machine learning models
 
+Automatically scales Kubernetes deployments based on predictions
 
-This project introduces an AI-driven predictive autoscaler that:
+Integrates with Prometheus for real-time metric collection
 
+Provides visualization through Grafana dashboards
 
+Runs as a containerized autoscaler within the Kubernetes cluster
 
-Collects system metrics from Prometheus
+Implements secure access using Kubernetes RBAC
 
-
-
-Trains a machine learning model to detect load patterns
-
-
-
-Predicts upcoming workload
-
-
-
-Automatically scales Kubernetes deployments
-
-
-
-The autoscaler runs as a containerized service inside the Kubernetes cluster and dynamically adjusts pod replicas.
-
-
-
-Architecture
-
+System Architecture
 Users / Traffic
-
-&#x20;      |
-
-&#x20;      v
-
-+----------------------+
-
-| Kubernetes Deployment|
-
-| hello-minikube app  |
-
-+----------+-----------+
-
-&#x20;          |
-
-&#x20;          v
-
-+----------------------+
-
-| Prometheus Monitoring|
-
-| Collects Metrics     |
-
-+----------+-----------+
-
-&#x20;          |
-
-&#x20;          v
-
-+----------------------+
-
-| AI Autoscaler Pod    |
-
-| ML Prediction Model  |
-
-+----------+-----------+
-
-&#x20;          |
-
-&#x20;          v
-
-+----------------------+
-
-| Kubernetes Scaling   |
-
-| Adjust Pod Replicas  |
-
-+----------------------+
-
-Tech Stack
-
-
-
-Kubernetes
-
-
-
-Docker
-
-
-
-Python
-
-
-
-Prometheus
-
-
-
-Grafana
-
-
-
-Machine Learning (scikit-learn)
-
-
-
-Features
-
-
-
-AI-based prediction of workload
-
-
-
-Automatic scaling of Kubernetes deployments
-
-
-
-Real-time monitoring using Prometheus
-
-
-
-Visualization with Grafana dashboards
-
-
-
-Containerized autoscaler service
-
-
-
-Kubernetes RBAC security configuration
-
-
+        │
+        ▼
+Kubernetes Deployment (Application)
+        │
+        ▼
+Prometheus Monitoring (Metrics Collection)
+        │
+        ▼
+AI Autoscaler Pod (ML Prediction Engine)
+        │
+        ▼
+Kubernetes Scaling API (Adjust Replicas)
+Technology Stack
+
+Containerization: Docker
+
+Orchestration: Kubernetes
+
+Programming Language: Python
+
+Monitoring: Prometheus
+
+Visualization: Grafana
+
+Machine Learning: Scikit-learn
 
 Project Structure
-
 ai-kubernetes-autoscaler
-
 │
-
-├── autoscaler
-
-│   ├── predict\_load.py
-
-│   ├── train\_model.py
-
-│   └── metrics\_collector.py
-
+├── autoscaler/
+│   ├── predict_load.py
+│   ├── train_model.py
+│   └── metrics_collector.py
 │
-
-├── docker
-
+├── docker/
 │   └── Dockerfile
-
 │
-
-├── k8s
-
+├── k8s/
 │   ├── autoscaler-deployment.yaml
-
 │   └── autoscaler-rbac.yaml
-
 │
-
-├── model
-
-│   └── load\_model.pkl
-
+├── model/
+│   └── load_model.pkl
 │
-
 ├── requirements.txt
-
 └── README.md
+Working Mechanism
 
-How It Works
+The application is deployed as a Kubernetes deployment.
 
+Prometheus continuously collects system and application metrics.
 
+A Python-based service gathers these metrics and prepares training data.
 
-Application runs in Kubernetes as a deployment.
+A machine learning model is trained to identify workload patterns.
 
+The AI autoscaler runs within the cluster as a pod.
 
+It predicts future load and triggers scaling actions accordingly.
 
-Prometheus collects system and application metrics.
-
-
-
-A Python service collects metrics and builds a dataset.
-
-
-
-A machine learning model is trained using collected data.
-
-
-
-The AI autoscaler runs continuously inside Kubernetes.
-
-
-
-The autoscaler predicts load and triggers scaling actions.
-
-
-
-Example scaling command executed by the autoscaler:
-
-
+Example Scaling Command:
 
 kubectl scale deployment hello-minikube --replicas=5
-
-Running the Project
-
-Start Kubernetes Cluster
-
+Setup and Execution
+1. Start Kubernetes Cluster
 minikube start
-
-Deploy Monitoring Stack
-
-
+2. Deploy Monitoring Stack
 
 Install Prometheus and Grafana using Helm.
 
-
-
-Build Docker Image
-
+3. Build Docker Image
 docker build -t ai-autoscaler .
-
-Load Image into Minikube
-
+4. Load Image into Minikube
 minikube image load ai-autoscaler:latest
-
-Deploy Autoscaler
-
+5. Deploy Autoscaler
 kubectl apply -f k8s/autoscaler-rbac.yaml
-
 kubectl apply -f k8s/autoscaler-deployment.yaml
-
-Verify Deployment
-
+6. Verify Deployment
 kubectl get pods
-
 kubectl logs -f deployment/ai-autoscaler
-
-Example Autoscaler Logs
-
+Sample Output (Logs)
 AI Autoscaler Started...
-
 Predicted Load: 1.0
-
 High load detected! Scaling pods...
-
 deployment.apps/hello-minikube scaled
+Monitoring and Visualization
 
-Monitoring
+Prometheus collects real-time metrics
 
+Grafana dashboards display:
 
+System health
 
-Metrics are collected using Prometheus and visualized using Grafana dashboards.
+Application performance
 
-
-
-This enables real-time monitoring of:
-
-
-
-system health
-
-
-
-application performance
-
-
-
-scaling events
-
-
+Scaling events
 
 Learning Outcomes
 
+This project demonstrates:
 
+Kubernetes deployment and scaling strategies
 
-This project demonstrates practical experience with:
+Docker-based containerization
 
+Monitoring and observability practices
 
+Integration of machine learning into infrastructure automation
 
-Kubernetes deployments and scaling
+Kubernetes RBAC and security configuration
 
+Design of cloud-native architectures
 
+Future Enhancements
 
-containerization using Docker
+Use real-time traffic data instead of synthetic inputs
 
+Implement reinforcement learning for adaptive scaling decisions
 
+Deploy on cloud platforms such as AWS or GCP
 
-monitoring and observability
+Integrate with Kubernetes Horizontal Pod Autoscaler (HPA)
 
-
-
-machine learning integration in infrastructure automation
-
-
-
-RBAC and Kubernetes security
-
-
-
-cloud-native system architecture
-
-
-
-Future Improvements
-
-
-
-Use real traffic metrics instead of timestamps
-
-
-
-Implement reinforcement learning for scaling decisions
-
-
-
-Deploy on a cloud platform such as AWS or GCP
-
-
-
-Add horizontal pod autoscaler integration
-
-
-
-Build a web dashboard for autoscaler insights
-
+Develop a web-based dashboard for autoscaler insights
