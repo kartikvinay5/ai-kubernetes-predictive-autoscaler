@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ai-autoscaler-sa
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ai-autoscaler-role
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments", "deployments/scale"]
+  verbs: ["get", "list", "watch", "update", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ai-autoscaler-binding
+subjects:
+- kind: ServiceAccount
+  name: ai-autoscaler-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: ai-autoscaler-role
+  apiGroup: rbac.authorization.k8s.io

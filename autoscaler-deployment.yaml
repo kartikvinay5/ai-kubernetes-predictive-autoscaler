@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-autoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-autoscaler
+  template:
+    metadata:
+      labels:
+        app: ai-autoscaler
+    spec:
+      serviceAccountName: ai-autoscaler-sa
+      containers:
+      - name: ai-autoscaler
+        image: ai-autoscaler:latest
+        imagePullPolicy: Never
